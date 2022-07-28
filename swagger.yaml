@@ -1,0 +1,82 @@
+---
+openapi: 3.0.0
+info:
+  title: Lordos App API Documentation
+  version: 1.0.0
+  description: REST APIs Library and Documentation.
+servers:
+  - url: "http://localhost:7007/"
+    description: Development Server
+tags:
+  - name: User
+    description: Everything about users
+paths:
+  /users:
+    get:
+      tags:
+        - User
+      summary: Returns all users.
+      operationId: getUsers
+      responses:
+        "200":
+          description: Successful operation
+        "500":
+          description: Server Error
+  /user/create:
+    post:
+      tags:
+        - User
+      summary: Creates a new user.
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  format: email
+                  example: C32D
+                RoleId:
+                  type: number
+                  example: 1
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: Bad Request | Missing parameters - code,RoleId
+        "500":
+          description: Server Error
+  /users/delete-all:
+    delete:
+      tags:
+        - User
+      summary: Deletes all users from the system.
+      operationId: deleteUsers
+      responses:
+        "200":
+          description: Successful operation
+        "500":
+          description: Server Error
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          description: The auto-generated id of the user
+        code:
+          type: string
+          description: The user code
+        RoleId:
+          type: number
+          description: The user role id (1 || 2 = Parent & 3 = Child)
+      example:
+        id: 4
+        code: C2A3
+        RoleId: 3
