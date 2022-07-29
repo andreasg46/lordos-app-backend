@@ -13,7 +13,6 @@ const version = require('./package.json').version;
 const db = require('./config/db');
 db.authenticate()
     .then(() => {
-        // console.log('Database connected...');
         console.log(`Database Connected`);
     })
     .catch(err => console.log('Error: ' + err))
