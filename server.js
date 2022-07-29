@@ -31,13 +31,15 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
 // Routes
-const user_api = require('./routes/user_api');
+const user_apis = require('./routes/user_apis');
+const session_apis = require('./routes/session_apis');
 
 // Landing Message
 app.get(PATH, (req, res) => res.end(`${new Date()} : Lordos App API Server ${version}\n`));
 
 // Endpoints
-app.use('/', user_api)
+app.use('/', user_apis)
+app.use('/', session_apis)
 
 app.listen(PORT, () => {
     console.log(`App listening at http://localhost:${PORT}`)

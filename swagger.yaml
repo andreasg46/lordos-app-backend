@@ -10,6 +10,8 @@ servers:
 tags:
   - name: User
     description: Everything about users
+  - name: Session
+    description: Everything about sessions
 paths:
   /users:
     get:
@@ -58,6 +60,58 @@ paths:
       responses:
         "200":
           description: Successful operation
+        "500":
+          description: Server Error
+  /sessions:
+    get:
+      tags:
+        - Session
+      summary: Returns all sessions.
+      operationId: getSessions
+      responses:
+        "200":
+          description: Successful operation
+        "500":
+          description: Server Error
+  /session/user/{code}:
+    get:
+      tags:
+        - Session
+      summary: Returns sessions if any user.
+      operationId: getSessionByUser code
+      parameters:
+        - name: code
+          in: path
+          required: true
+          description: The code of the user to return the session.
+      responses:
+        "200":
+          description: Successful operation
+        "404":
+          description: Not Found
+        "500":
+          description: Server Error
+  /session/create:
+    post:
+      tags:
+        - Session
+      summary: Creates a new session.
+      operationId: createSession
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                parent_1:
+                  type: string
+                  example: A32D
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: Bad Request | Missing parameters - parent_1 || parent_2 || child
         "500":
           description: Server Error
 components:
