@@ -24,6 +24,24 @@ paths:
           description: Successful operation
         "500":
           description: Server Error
+  /user/{code}:
+    get:
+      tags:
+        - User
+      summary: Returns user by code
+      operationId: getUserByCode
+      parameters:
+        - name: code
+          in: path
+          required: true
+          description: The code of the user to return.
+      responses:
+        "200":
+          description: Successful operation
+        "404":
+          description: Not Found
+        "500":
+          description: Server Error
   /user/create:
     post:
       tags:
@@ -39,8 +57,7 @@ paths:
               properties:
                 code:
                   type: string
-                  format: email
-                  example: C32D
+                  example: 101
                 RoleId:
                   type: number
                   example: 1
@@ -62,6 +79,17 @@ paths:
           description: Successful operation
         "500":
           description: Server Error
+  /roles:
+    get:
+      tags:
+        - User
+      summary: Returns all roles.
+      operationId: getRoles
+      responses:
+        "200":
+          description: Successful operation
+        "500":
+          description: Server Error
   /sessions:
     get:
       tags:
@@ -73,12 +101,28 @@ paths:
           description: Successful operation
         "500":
           description: Server Error
+  /session/{id}:
+    get:
+      tags:
+        - Session
+      summary: Returns sessions by id.
+      operationId: getSessionById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the sessions to return.
+      responses:
+        "200":
+          description: Successful operation
+        "500":
+          description: Server Error
   /session/user/{code}:
     get:
       tags:
         - Session
       summary: Returns sessions if any user.
-      operationId: getSessionByUser code
+      operationId: getSessionByUser
       parameters:
         - name: code
           in: path
@@ -89,6 +133,22 @@ paths:
           description: Successful operation
         "404":
           description: Not Found
+        "500":
+          description: Server Error
+  /session/count/{id}:
+    get:
+      tags:
+        - Session
+      summary: Returns activated count sessions by id.
+      operationId: getActivatedSessionsById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the sessions to return count.
+      responses:
+        "200":
+          description: Successful operation
         "500":
           description: Server Error
   /session/create:
@@ -104,26 +164,111 @@ paths:
             schema:
               type: object
               properties:
-                parent_1:
+                id:
+                  type: number
+                  example: 1000
+                code:
                   type: string
-                  example: A32D
+                  example: 101
+                activated:
+                  type: boolean
+                  example: false
+                end_date:
+                  type: string
+                  example: 2022-01-31T13:00
+                status:
+                  type: string
+                  example: Inactive
       responses:
         "200":
           description: Successful operation
         "400":
-          description: Bad Request | Missing parameters - parent_1 || parent_2 || child
+          description: Bad Request | Missing parameters - id,code
         "500":
           description: Server Error
+  /sessions/update/{id}:
+    put:
+      tags:
+        - Session
+      summary: Updates session start date, end date or status by id.
+      operationId: putSessionById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The session id to change.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                start_date:
+                  type: string
+                  example: 2022-01-01T13:00
+                end_date:
+                  type: string
+                  example: 2022-01-08T13:00
+                status:
+                  type: string
+                  example: Inactive
+      responses:
+        "200":
+          description: Successful operation
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal Server Error
+  /session/update/{id}/{code}:
+    put:
+      tags:
+        - Session
+      summary: Updates session activated, start date, end date or status by id and code.
+      operationId: putSessionByIdAndCode
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The session id to change.
+        - name: code
+          in: path
+          required: true
+          description: The session user code to change.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                activated:
+                  type: boolean
+                  example: false
+                start_date:
+                  type: string
+                  example: 2022-01-01T13:00
+                end_date:
+                  type: string
+                  example: 2022-01-08T13:00
+                status:
+                  type: string
+                  example: Inactive
+      responses:
+        "200":
+          description: Successful operation
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal Server Error
 components:
   schemas:
     User:
       type: object
       required:
-        - id
+        - code
+        - RoleId
       properties:
-        id:
-          type: integer
-          description: The auto-generated id of the user
         code:
           type: string
           description: The user code
@@ -134,3 +279,48 @@ components:
         id: 4
         code: C2A3
         RoleId: 3
+    Role:
+      type: object
+      required:
+        - title
+      properties:
+        id:
+          type: number
+          description: The id number
+        title:
+          type: string
+          description: The title of role
+      example:
+        id: 4
+        title: Parent 1
+    Session:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: number
+          description: The auto-incremented id number
+        code:
+          type: string
+          description: The code of user 1
+        activated:
+          type: string
+          description: false
+        start_date:
+          type: string
+          description: The start date of session
+        end_date:
+          type: string
+          description: The end date of session
+        status:
+          type: string
+          description: The status of session
+      example:
+        id: 4
+        code: 101
+        activated: false
+        start_date: 2022-08-02T14:00:06.022Z
+        end_date: 2022-08-09T14:00:06.022Z
+        status: Inactive
+

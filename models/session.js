@@ -7,31 +7,30 @@ const Session = db.define('Session', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
     },
-    parent_1: {
+    code: {
+        primaryKey: true,
         type: DataTypes.STRING,
         allowNull: true,
         references: {
             model: User,
             key: 'code'
+
         }
     },
-    parent_2: {
-        type: DataTypes.STRING,
+    activated: {
+        type: DataTypes.BOOLEAN,
         allowNull: true,
-        references: {
-            model: User,
-            key: 'code'
-        }
+        defaultValue: false
     },
-    child: {
-        type: DataTypes.STRING,
+
+    start_date: {
+        type: DataTypes.DATE,
         allowNull: true,
-        references: {
-            model: User,
-            key: 'code'
-        }
+    },
+    end_date: {
+        type: DataTypes.DATE,
+        allowNull: true,
     },
     status: {
         type: DataTypes.ENUM('Active', 'Inactive', 'Pending'),

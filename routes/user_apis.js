@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require('../config/db');
 
 const User = require('../models/user');
+const Role = require('../models/role');
 
 router.get('/users', (req, res) => {
     User.findAll()
@@ -10,6 +11,28 @@ router.get('/users', (req, res) => {
             return res.status(200)
                 .setHeader('content-type', 'application/json')
                 .send(users);
+        })
+        .catch(error => {
+            return res.status(500)
+                .setHeader('content-type', 'application/json')
+                .send({error: `Server error: ${error.name}`});
+        });
+});
+
+router.get('/user/:code', (req, res) => {
+    const {code} = req.params;
+
+    User.findOne({where: {code: code}})
+        .then(user => {
+            if(user) {
+                return res.status(200)
+                    .setHeader('content-type', 'application/json')
+                    .send(user);
+            } else {
+                return res.status(404)
+                    .setHeader('content-type', 'application/json')
+                    .send({error: `User not found for code: ${code}!`});
+            }
         })
         .catch(error => {
             return res.status(500)
@@ -104,7 +127,7 @@ router.delete('/users/delete-all', (req, res) => {
         where: {},
         truncate: true
     })
-        .then(user => {
+        .then(() => {
             res.status(200)
                 .setHeader('content-type', 'application/json')
                 .send({message: `Users deleted!`});
@@ -116,5 +139,18 @@ router.delete('/users/delete-all', (req, res) => {
         });
 });
 
+router.get('/roles', (req, res) => {
+    Role.findAll()
+        .then(roles => {
+            return res.status(200)
+                .setHeader('content-type', 'application/json')
+                .send(roles);
+        })
+        .catch(error => {
+            return res.status(500)
+                .setHeader('content-type', 'application/json')
+                .send({error: `Server error: ${error.name}`});
+        });
+});
 
 module.exports = router;
