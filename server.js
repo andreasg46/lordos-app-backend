@@ -33,6 +33,7 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // Routes
 const user_apis = require('./routes/user_apis');
 const session_apis = require('./routes/session_apis');
+const question_apis = require('./routes/question_apis');
 
 // Landing Message
 app.get(PATH, (req, res) => res.end(`${new Date()} : Lordos App API Server ${version}\n`));
@@ -40,6 +41,7 @@ app.get(PATH, (req, res) => res.end(`${new Date()} : Lordos App API Server ${ver
 // Endpoints
 app.use('/', user_apis)
 app.use('/', session_apis)
+app.use('/', question_apis)
 
 app.listen(PORT, () => {
     console.log(`App listening at http://localhost:${PORT}`)

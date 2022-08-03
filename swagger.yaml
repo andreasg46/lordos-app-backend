@@ -12,6 +12,8 @@ tags:
     description: Everything about users
   - name: Session
     description: Everything about sessions
+  - name: Question
+    description: Everything about questions
 paths:
   /users:
     get:
@@ -261,6 +263,46 @@ paths:
           description: Unauthorized
         "500":
           description: Internal Server Error
+  /questions:
+    get:
+      tags:
+        - Question
+      summary: Returns all questions.
+      operationId: getQuestions
+      responses:
+        "200":
+          description: Successful operation
+        "500":
+          description: Server Error
+  /question/create:
+    post:
+      tags:
+        - Question
+      summary: Creates a new question.
+      operationId: createQuestion
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Who's the founder of Facebook?
+                options:
+                  type: array
+                  example: ['Mark Zuckerberg', 'Bill Gates', 'Steve Jobs', 'Elon Musk']
+                correct_option:
+                  type: string
+                  example: Mark Zuckerberg
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: Bad Request | Missing parameters - title,options
+        "500":
+          description: Server Error
 components:
   schemas:
     User:
@@ -323,4 +365,27 @@ components:
         start_date: 2022-08-02T14:00:06.022Z
         end_date: 2022-08-09T14:00:06.022Z
         status: Inactive
+    Question:
+      type: object
+      required:
+        - id
+        - title
+        - options
+      properties:
+        id:
+          type: number
+          description: The auto-incremented id number
+        title:
+          type: string
+          description: The question
+        options:
+          type: array
+          description: The list of options
+      example:
+        id: 13
+        title: Who's the ex CEO of Google?
+        options: ['Harry Potter', 'Larry Page', 'Elon Musk', 'Jeff Bezos']
+        correct_option:
+          type: string
+          description: Larry Page
 
