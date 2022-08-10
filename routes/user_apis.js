@@ -153,4 +153,26 @@ router.get('/roles', (req, res) => {
         });
 });
 
+router.get('/role/:id', (req, res) => {
+    const {id} = req.params;
+
+    Role.findOne({where: {id: id}})
+        .then(role => {
+            if(role) {
+                return res.status(200)
+                    .setHeader('content-type', 'application/json')
+                    .send(role);
+            } else {
+                return res.status(404)
+                    .setHeader('content-type', 'application/json')
+                    .send({error: `Role not found for id: ${id}!`});
+            }
+        })
+        .catch(error => {
+            return res.status(500)
+                .setHeader('content-type', 'application/json')
+                .send({error: `Server error: ${error.name}`});
+        });
+});
+
 module.exports = router;

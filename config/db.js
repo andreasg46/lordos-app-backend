@@ -7,11 +7,12 @@ const db = new Sequelize(process.env.DB, process.env.DB_USER, process.env.DB_PAS
     dialect: "postgres"
 });
 
-// Sync DB
-async function init() {
-    await db.sync();
-}
+// // Sync DB
+// async function init() {
+//     await db.sync();
+// }
+//
+// init();
 
-init();
 
 module.exports = db;

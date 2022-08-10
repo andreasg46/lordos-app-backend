@@ -17,6 +17,18 @@ const Question = db.define('Question', {
     correct_option: {
         type: DataTypes.STRING,
     },
+    type: {
+        type: DataTypes.ENUM('parent', 'child'),
+        allowNull: false
+    },
+    phase: {
+        type: DataTypes.ENUM('A', 'B', 'C'),
+        allowNull: false
+    },
+    deadline_min: {
+        type: DataTypes.INTEGER,
+        defaultValue: 30
+    },
 }, {
     tableName: 'questions',
     timestamps: false

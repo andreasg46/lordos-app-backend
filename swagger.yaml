@@ -5,14 +5,18 @@ info:
   version: 1.0.0
   description: REST APIs Library and Documentation.
 servers:
-  - url: "http://localhost:7007/"
+  - url: "http://localhost:7050/"
     description: Development Server
+  - url: "http://dev.silversky3d.com/api-lordos/"
+    description: Production Server
 tags:
   - name: User
     description: Everything about users
   - name: Session
     description: Everything about sessions
   - name: Question
+    description: Everything about questions
+  - name: Answer
     description: Everything about questions
 paths:
   /users:
@@ -90,6 +94,24 @@ paths:
       responses:
         "200":
           description: Successful operation
+        "500":
+          description: Server Error
+  /role/{id}:
+    get:
+      tags:
+        - User
+      summary: Returns role by id
+      operationId: getRoleById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the role to return.
+      responses:
+        "200":
+          description: Successful operation
+        "404":
+          description: Not Found
         "500":
           description: Server Error
   /sessions:
@@ -274,6 +296,28 @@ paths:
           description: Successful operation
         "500":
           description: Server Error
+  /questions/{type}/{phase}:
+    get:
+      tags:
+        - Question
+      summary: Returns questions by type and phase.
+      operationId: getQuestionsByTypeAndPhase
+      parameters:
+        - name: type
+          in: path
+          required: true
+          description: The type of the question to return.
+        - name: phase
+          in: path
+          required: true
+          description: The phase of the question to return.
+      responses:
+        "200":
+          description: Successful operation
+        "404":
+          description: Not Found
+        "500":
+          description: Server Error
   /question/create:
     post:
       tags:
@@ -296,6 +340,55 @@ paths:
                 correct_option:
                   type: string
                   example: Mark Zuckerberg
+                type:
+                  type: string
+                  example: parent
+                phase:
+                  type: string
+                  example: A
+                deadline_min:
+                  type: number
+                  example: 30
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: Bad Request | Missing parameters - title,options,correct_option,type
+        "500":
+          description: Server Error
+  /answers:
+    get:
+      tags:
+        - Answer
+      summary: Returns all answers.
+      operationId: getAnswers
+      responses:
+        "200":
+          description: Successful operation
+        "500":
+          description: Server Error
+  /answer/create:
+    post:
+      tags:
+        - Answer
+      summary: Creates a new answer.
+      operationId: createAnswer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                selected:
+                  type: string
+                  example: Mark Zuckerberg
+                UserCode:
+                  type: string
+                  example: 101
+                QuestionId:
+                  type: number
+                  example: 4
       responses:
         "200":
           description: Successful operation
@@ -371,6 +464,10 @@ components:
         - id
         - title
         - options
+        - correct_option
+        - type
+        - phase
+        - deadline_min
       properties:
         id:
           type: number
@@ -388,4 +485,38 @@ components:
         correct_option:
           type: string
           description: Larry Page
+        type:
+          type: string
+          description: The type of question ['parent', 'child']
+        phase:
+          type: string
+          description: The phase of question ['A', 'B', 'C']
+        deadline_min:
+          type: number
+          description: 30
+    Answer:
+      type: object
+      required:
+        - id
+        - selected
+        - UserCode
+        - QuestionId
+      properties:
+        id:
+          type: number
+          description: The auto-incremented id number
+        selected:
+          type: string
+          description: The answer
+        UserCode:
+          type: string
+          description: The code of the user who answered
+        QuestionId:
+          type: number
+          description: The id of the question
+      example:
+        id: 66
+        selected: Larry Page
+        UserCode: 101
+        QuestionId: 4
 
