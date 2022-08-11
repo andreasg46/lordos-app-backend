@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const PORT = process.env.PORT;
-const PATH = '/api-lordos/';
+const PATH = '/';
 
 // Libraries
 const express = require('express');
@@ -13,7 +13,7 @@ const version = require('./package.json').version;
 const db = require('./config/db');
 db.authenticate()
     .then(() => {
-        console.log(`Database Connected`);
+console.log(`Database Connected`);
     })
     .catch(err => console.log('Error: ' + err))
 
@@ -46,13 +46,14 @@ const user_apis = require('./routes/user_apis');
 const session_apis = require('./routes/session_apis');
 const question_apis = require('./routes/question_apis');
 const answer_apis = require('./routes/answer_apis');
-const {populateData} = require("./config/data");
+const push_apis = require('./routes/push_apis');
 
 // Endpoints
 app.use(PATH, user_apis)
 app.use(PATH, session_apis)
 app.use(PATH, question_apis)
 app.use(PATH, answer_apis)
+app.use(PATH, push_apis)
 
 app.listen(PORT, () => {
     console.log(`App listening at http://localhost:${PORT}${PATH}`)

@@ -2,6 +2,7 @@ npm init
 <br />npm install express --save
 <br />npm install sequelize --save 
 <br />npm install dotenv --save 
+<br />npm i onesignal-node
 
 <br /># One of the following:
 <br />$ npm install --save pg pg-hstore # Postgres

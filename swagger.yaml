@@ -5,9 +5,9 @@ info:
   version: 1.0.0
   description: REST APIs Library and Documentation.
 servers:
-  - url: "http://localhost:7050/"
+  - url: "http://localhost:7050"
     description: Development Server
-  - url: "http://dev.silversky3d.com/api-lordos/"
+  - url: "https://dev.silversky3d.com/api-lordos/"
     description: Production Server
 tags:
   - name: User
@@ -17,7 +17,9 @@ tags:
   - name: Question
     description: Everything about questions
   - name: Answer
-    description: Everything about questions
+    description: Everything about answers
+  - name: Push Notifications
+    description: Everything about push Notifications
 paths:
   /users:
     get:
@@ -396,6 +398,91 @@ paths:
           description: Bad Request | Missing parameters - title,options
         "500":
           description: Server Error
+  /devices:
+    get:
+      tags:
+        - Push Notifications
+      summary: Returns all devices.
+      operationId: getDevices
+      responses:
+        "200":
+          description: Successful operation
+        "500":
+          description: Server Error
+  /web-push:
+    post:
+      tags:
+        - Push Notifications
+      summary: Sends a push notifications.
+      operationId: sendPush
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                session_id:
+                  type: string
+                  example: 100
+                headings:
+                  type: string
+                  example: Default Heading
+                subtitle:
+                  type: string
+                  example: Default Subtitle
+                campaign:
+                  type: string
+                  example: Default Campaign
+                datetime:
+                  type: string
+                  example: Default Date
+                topic:
+                  type: string
+                  example: Default Topic
+                click_url:
+                  type: string
+                  example: http://localhost:5000/#/questions?phase=A
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: Bad Request | Missing parameters - title,options
+        "500":
+          description: Server Error
+  /sms-push:
+    post:
+      tags:
+        - Push Notifications
+      summary: Sends an sms notifications.
+      operationId: sendSMS
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                session_id:
+                  type: string
+                  example: 100
+                subtitle:
+                  type: string
+                  example: Default Subtitle
+                datetime:
+                  type: string
+                  example: Default Date
+                click_url:
+                  type: string
+                  example: http://localhost:5000/#/questions?phase=A
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: Bad Request | Missing parameters - title,options
+        "500":
+          description: Server Error
+
 components:
   schemas:
     User:
@@ -519,4 +606,44 @@ components:
         selected: Larry Page
         UserCode: 101
         QuestionId: 4
+    Push Notification:
+      type: object
+      required:
+        - session_id
+        - headings
+        - subtitle
+        - campaign
+        - datetime
+        - topic
+        - click_url
+      properties:
+        session_id:
+          type: number
+          description: The session id
+        headings:
+          type: string
+          description: The push notification heading
+        subtitle:
+          type: string
+          description: The push notification subtitle/content
+        campaign:
+          type: string
+          description: The push notification campaign
+        datetime:
+          type: string
+          description: The push notification send datetime
+        topic:
+          type: string
+          description: The push notification topic
+        click_url:
+          type: string
+          description: The push notification click url
+      example:
+        session_id: 100
+        headings: Default Heading
+        subtitle: Default Subtitle
+        campaign: Default Campaign
+        datetime: Default Datetime
+        topic: Default Topic
+        click_url: https://localhost:5000/#/questions?phase=A
 
