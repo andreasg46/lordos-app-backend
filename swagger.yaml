@@ -409,6 +409,39 @@ paths:
           description: Successful operation
         "500":
           description: Server Error
+  /device:
+    post:
+      tags:
+        - Push Notifications
+      summary: Creates a device for push notifications.
+      operationId: createDevice
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_type:
+                  type: number
+                  example: 14
+                identifier:
+                  type: string
+                  example: +35799123456
+                session_id:
+                  type: string
+                  example: 500
+                external_user_id:
+                  type: string
+                  example: 502
+
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: Bad Request | Missing parameters - device_type
+        "500":
+          description: Server Error
   /web-push:
     post:
       tags:

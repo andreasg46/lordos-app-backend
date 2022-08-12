@@ -25,6 +25,7 @@
     "sqlite3": "^5.0.8",
     "swagger-jsdoc": "^6.2.1",
     "swagger-ui-express": "^4.4.0",
+    "twilio": "^3.80.1",
     "websocket": "^1.0.34",
     "yamljs": "^0.3.0"
   },
