@@ -455,9 +455,9 @@ paths:
             schema:
               type: object
               properties:
-                session_id:
+                code:
                   type: string
-                  example: 100
+                  example: 101
                 headings:
                   type: string
                   example: Default Heading
@@ -480,7 +480,7 @@ paths:
         "200":
           description: Successful operation
         "400":
-          description: Bad Request | Missing parameters - title,options
+          description: Bad Request | Missing parameters - code,datetime,topic,click_url
         "500":
           description: Server Error
   /sms-push:
@@ -496,9 +496,9 @@ paths:
             schema:
               type: object
               properties:
-                session_id:
+                code:
                   type: string
-                  example: 100
+                  example: 101
                 subtitle:
                   type: string
                   example: Default Subtitle
@@ -512,7 +512,7 @@ paths:
         "200":
           description: Successful operation
         "400":
-          description: Bad Request | Missing parameters - title,options
+          description: Bad Request | Missing parameters - code,datetime,topic,click_url
         "500":
           description: Server Error
 

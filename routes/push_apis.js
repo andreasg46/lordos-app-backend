@@ -26,6 +26,7 @@ router.post('/device', async (req, res) => {
     await client.addDevice({
         device_type: device_type,
         identifier: identifier,
+        country: "CY",
         tags: {
             session_id: session_id
         },
@@ -46,16 +47,16 @@ router.post('/device', async (req, res) => {
 });
 
 router.post('/web-push', async (req, res) => {
-    let {session_id, headings, subtitle, campaign, datetime, topic, click_url} = req.body;
+    let {code, headings, subtitle, campaign, datetime, topic, click_url} = req.body;
 
     headings = (headings === '' ? 'Default Heading' : headings);
     subtitle = (subtitle === '' ? 'Default Subtitle' : subtitle);
     campaign = (campaign === '' ? 'Default Campaign' : campaign);
 
-    if (!session_id || !datetime || !topic || !click_url) {
+    if (!code  || !datetime || !topic || !click_url) {
         return res.status(400)
             .setHeader('content-type', 'application/json')
-            .send({error: `Missing parameters - session_id,datetime,topic,click_url`});
+            .send({error: `Missing parameters - code,datetime,topic,click_url`});
     }
 
     const notification = {
@@ -66,9 +67,10 @@ router.post('/web-push', async (req, res) => {
         web_push_topic: topic,
         url: click_url,
         send_after: datetime,
-        filters: [
-            {"field": "tag", "key": "session_id", "relation": "=", "value": session_id},
-        ],
+        include_external_user_ids: [code]
+        // filters: [
+        //     {"field": "tag", "key": "session_id", "relation": "=", "value": session_id},
+        // ],
     };
 
     client.createNotification(notification)
@@ -87,12 +89,12 @@ router.post('/web-push', async (req, res) => {
 });
 
 router.post('/sms-push', async (req, res) => {
-    let {session_id, subtitle, datetime, click_url} = req.body;
+    let {code, subtitle, datetime, click_url} = req.body;
 
-    if (!session_id || !datetime || !subtitle || !click_url) {
+    if (!code || !datetime || !subtitle || !click_url) {
         return res.status(400)
             .setHeader('content-type', 'application/json')
-            .send({error: `Missing parameters - session_id,datetime,topic,click_url`});
+            .send({error: `Missing parameters - code,datetime,topic,click_url`});
     }
 
     const sms = {
@@ -100,8 +102,8 @@ router.post('/sms-push', async (req, res) => {
         "sms_from": twilioNumber,
         "contents": {en: "Questions are now available! " + click_url},
         "send_after": datetime,
-        "filters": [{"field": "tag", "key": "session_id", "relation": "=", "value": session_id},
-        ],
+        "include_external_user_ids": [code]
+        // "filters": [{"field": "tag", "key": "session_id", "relation": "=", "value": session_id}],
     };
 
     client.createNotification(sms)
