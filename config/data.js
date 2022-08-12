@@ -48,6 +48,7 @@ async function populateData() {
     await Question.sync();
     const countQuestion = await Question.count() || 0;
     if (countQuestion === 0) {
+        // Phase A
         await Question.create({title: "Parent: Who's the founder of Facebook?", options: ["Mark Zuckerberg", "Bill Gates", "Steve Jobs", "Elon Musk"], "correct_option": "Mark Zuckerberg", type: 'parent', phase: 'A'});
         await Question.create({title: "Parent: What technology is used to record cryptocurrency transactions?", options: ["Digital wallet", "Mining", "Blockchain", "Token"], "correct_option": "Mining", type: 'parent',phase: 'A'});
         await Question.create({title: "Parent: Why is Big Data important?", options: ["Because it is structured", "Because it may be analyzed to reveal patterns and trends", "Because of its complexity", "Because of its size"], "correct_option": "Because it may be analyzed to reveal patterns and trends", type: 'parent', phase: 'A'});
@@ -56,6 +57,26 @@ async function populateData() {
         await Question.create({title: "Child: What technology is used to record cryptocurrency transactions?", options: ["Digital wallet", "Mining", "Blockchain", "Token"], "correct_option": "Mining", type: 'child',phase: 'A'});
         await Question.create({title: "Child: Why is Big Data important?", options: ["Because it is structured", "Because it may be analyzed to reveal patterns and trends", "Because of its complexity", "Because of its size"], "correct_option": "Because it may be analyzed to reveal patterns and trends", type: 'child', phase: 'A'});
         await Question.create({title: "Child: What technology is used to make telephone calls over the Internet possible?", options: ["Bluetooth", "Ethernet", "NFC", "VoIP"], "correct_option": "VoIP", type: 'child', phase: 'A'});
+
+        // Phase B
+        await Question.create({title: "Parent: Who's the founder of Facebook?", options: ["Mark Zuckerberg", "Bill Gates", "Steve Jobs", "Elon Musk"], "correct_option": "Mark Zuckerberg", type: 'parent', phase: 'B'});
+        await Question.create({title: "Parent: What technology is used to record cryptocurrency transactions?", options: ["Digital wallet", "Mining", "Blockchain", "Token"], "correct_option": "Mining", type: 'parent',phase: 'B'});
+        await Question.create({title: "Parent: Why is Big Data important?", options: ["Because it is structured", "Because it may be analyzed to reveal patterns and trends", "Because of its complexity", "Because of its size"], "correct_option": "Because it may be analyzed to reveal patterns and trends", type: 'parent', phase: 'B'});
+        await Question.create({title: "Parent: What technology is used to make telephone calls over the Internet possible?", options: ["Bluetooth", "Ethernet", "NFC", "VoIP"], "correct_option": "VoIP", type: 'parent', phase: 'B'});
+        await Question.create({title: "Child: Who's the founder of Facebook?", options: ["Mark Zuckerberg", "Bill Gates", "Steve Jobs", "Elon Musk"], "correct_option": "Mark Zuckerberg", type: 'child', phase: 'B'});
+        await Question.create({title: "Child: What technology is used to record cryptocurrency transactions?", options: ["Digital wallet", "Mining", "Blockchain", "Token"], "correct_option": "Mining", type: 'child',phase: 'B'});
+        await Question.create({title: "Child: Why is Big Data important?", options: ["Because it is structured", "Because it may be analyzed to reveal patterns and trends", "Because of its complexity", "Because of its size"], "correct_option": "Because it may be analyzed to reveal patterns and trends", type: 'child', phase: 'B'});
+        await Question.create({title: "Child: What technology is used to make telephone calls over the Internet possible?", options: ["Bluetooth", "Ethernet", "NFC", "VoIP"], "correct_option": "VoIP", type: 'child', phase: 'B'});
+
+        // Phase C
+        await Question.create({title: "Parent: Who's the founder of Facebook?", options: ["Mark Zuckerberg", "Bill Gates", "Steve Jobs", "Elon Musk"], "correct_option": "Mark Zuckerberg", type: 'parent', phase: 'C'});
+        await Question.create({title: "Parent: What technology is used to record cryptocurrency transactions?", options: ["Digital wallet", "Mining", "Blockchain", "Token"], "correct_option": "Mining", type: 'parent',phase: 'C'});
+        await Question.create({title: "Parent: Why is Big Data important?", options: ["Because it is structured", "Because it may be analyzed to reveal patterns and trends", "Because of its complexity", "Because of its size"], "correct_option": "Because it may be analyzed to reveal patterns and trends", type: 'parent', phase: 'C'});
+        await Question.create({title: "Parent: What technology is used to make telephone calls over the Internet possible?", options: ["Bluetooth", "Ethernet", "NFC", "VoIP"], "correct_option": "VoIP", type: 'parent', phase: 'C'});
+        await Question.create({title: "Child: Who's the founder of Facebook?", options: ["Mark Zuckerberg", "Bill Gates", "Steve Jobs", "Elon Musk"], "correct_option": "Mark Zuckerberg", type: 'child', phase: 'C'});
+        await Question.create({title: "Child: What technology is used to record cryptocurrency transactions?", options: ["Digital wallet", "Mining", "Blockchain", "Token"], "correct_option": "Mining", type: 'child',phase: 'C'});
+        await Question.create({title: "Child: Why is Big Data important?", options: ["Because it is structured", "Because it may be analyzed to reveal patterns and trends", "Because of its complexity", "Because of its size"], "correct_option": "Because it may be analyzed to reveal patterns and trends", type: 'child', phase: 'C'});
+        await Question.create({title: "Child: What technology is used to make telephone calls over the Internet possible?", options: ["Bluetooth", "Ethernet", "NFC", "VoIP"], "correct_option": "VoIP", type: 'child', phase: 'C'});
     }
 
     // Sync DB
