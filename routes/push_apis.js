@@ -103,7 +103,6 @@ router.post('/sms-push', async (req, res) => {
         "contents": {en: "Questions are now available! " + click_url},
         "send_after": datetime,
         "include_external_user_ids": [code]
-        // "filters": [{"field": "tag", "key": "session_id", "relation": "=", "value": session_id}],
     };
 
     client.createNotification(sms)
