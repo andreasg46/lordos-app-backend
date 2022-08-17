@@ -3,15 +3,7 @@
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.39">
     <root id="1">
       <DateStyle>mdy</DateStyle>
-      <Grants>1||-9223372036854775808|c|G
-1||10|c|G
-1||10|C|G
-1||10|T|G
-13052||-9223372036854775808|c|G
-13052||10|c|G
-13052||10|C|G
-13052||10|T|G</Grants>
-      <IntrospectionStateNumber>4063</IntrospectionStateNumber>
+      <IntrospectionStateNumber>4118</IntrospectionStateNumber>
       <ServerVersion>10.21</ServerVersion>
       <StartupTime>1654854716</StartupTime>
       <TimeZones>true ACDT
@@ -1433,8 +1425,11 @@ true posixrules
 12762||10|C|G
 12762||-9223372036854775808|U|G
 12762||10|U|G</Grants>
-      <IntrospectionStateNumber>4063</IntrospectionStateNumber>
+      <IntrospectionStateNumber>4118</IntrospectionStateNumber>
       <ObjectId>17944</ObjectId>
+      <Relations>sequence|table|18825|18827|1
+sequence|table|18837|18839|1
+</Relations>
       <OwnerName>postgres</OwnerName>
     </database>
     <database id="4" parent="1" name="postgres">
@@ -4684,7 +4679,7 @@ true posixrules
     <schema id="247" parent="3" name="public">
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <IntrospectionStateNumber>4063</IntrospectionStateNumber>
+      <IntrospectionStateNumber>4118</IntrospectionStateNumber>
       <ObjectId>2200</ObjectId>
       <StateNumber>351</StateNumber>
       <OwnerName>postgres</OwnerName>
@@ -4718,5 +4713,359 @@ Pending</Labels>
       <SubKind>enum</SubKind>
       <OwnerName>postgres</OwnerName>
     </object-type>
+    <sequence id="251" parent="247" name="answers_id_seq">
+      <DataType>integer|0s</DataType>
+      <ObjectId>18837</ObjectId>
+      <StateNumber>4115</StateNumber>
+      <OwnerName>postgres</OwnerName>
+    </sequence>
+    <sequence id="252" parent="247" name="questions_id_seq">
+      <DataType>integer|0s</DataType>
+      <ObjectId>18825</ObjectId>
+      <StateNumber>4090</StateNumber>
+      <OwnerName>postgres</OwnerName>
+    </sequence>
+    <table id="253" parent="247" name="answers">
+      <ObjectId>18839</ObjectId>
+      <StateNumber>4115</StateNumber>
+      <OwnerName>postgres</OwnerName>
+    </table>
+    <table id="254" parent="247" name="questions">
+      <ObjectId>18827</ObjectId>
+      <StateNumber>4115</StateNumber>
+      <OwnerName>postgres</OwnerName>
+    </table>
+    <table id="255" parent="247" name="roles">
+      <ObjectId>18796</ObjectId>
+      <StateNumber>4070</StateNumber>
+      <OwnerName>postgres</OwnerName>
+    </table>
+    <table id="256" parent="247" name="sessions">
+      <ObjectId>18813</ObjectId>
+      <StateNumber>4080</StateNumber>
+      <OwnerName>postgres</OwnerName>
+    </table>
+    <table id="257" parent="247" name="users">
+      <ObjectId>18803</ObjectId>
+      <StateNumber>4115</StateNumber>
+      <OwnerName>postgres</OwnerName>
+    </table>
+    <column id="258" parent="253" name="id">
+      <DataType>integer|0s</DataType>
+      <DefaultExpression>nextval(&apos;answers_id_seq&apos;::regclass)</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>4115</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="259" parent="253" name="selected">
+      <DataType>varchar(255) []|0s</DataType>
+      <Position>2</Position>
+      <StateNumber>4115</StateNumber>
+      <TypeId>1015</TypeId>
+    </column>
+    <column id="260" parent="253" name="UserCode">
+      <DataType>varchar(255)|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StateNumber>4115</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="261" parent="253" name="QuestionId">
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StateNumber>4115</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="262" parent="253" name="createdAt">
+      <DataType>timestamp with time zone|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StateNumber>4115</StateNumber>
+      <TypeId>1184</TypeId>
+    </column>
+    <column id="263" parent="253" name="updatedAt">
+      <DataType>timestamp with time zone|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+      <StateNumber>4115</StateNumber>
+      <TypeId>1184</TypeId>
+    </column>
+    <foreign-key id="264" parent="253" name="answers_UserCode_fkey">
+      <ColNames>UserCode</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>18848</ObjectId>
+      <RefColNames>code</RefColNames>
+      <RefColPositions>1</RefColPositions>
+      <RefKeyName>users_pkey</RefKeyName>
+      <StateNumber>4115</StateNumber>
+      <RefTableId>18803</RefTableId>
+      <RefTableName>users</RefTableName>
+      <RefTableKind>table</RefTableKind>
+    </foreign-key>
+    <foreign-key id="265" parent="253" name="answers_QuestionId_fkey">
+      <ColNames>QuestionId</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>18853</ObjectId>
+      <RefColNames>id</RefColNames>
+      <RefColPositions>1</RefColPositions>
+      <StateNumber>4115</StateNumber>
+      <RefTableId>18827</RefTableId>
+      <RefTableName>questions</RefTableName>
+      <RefTableKind>table</RefTableKind>
+    </foreign-key>
+    <index id="266" parent="253" name="answers_pkey">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>18846</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>4115</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <key id="267" parent="253" name="answers_pkey">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>18847</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>4115</StateNumber>
+      <UnderlyingIndexId>18846</UnderlyingIndexId>
+    </key>
+    <column id="268" parent="254" name="id">
+      <DataType>integer|0s</DataType>
+      <DefaultExpression>nextval(&apos;questions_id_seq&apos;::regclass)</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>4090</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="269" parent="254" name="title">
+      <DataType>varchar(255)|0s</DataType>
+      <Position>2</Position>
+      <StateNumber>4090</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="270" parent="254" name="options">
+      <DataType>varchar(255) []|0s</DataType>
+      <Position>3</Position>
+      <StateNumber>4090</StateNumber>
+      <TypeId>1015</TypeId>
+    </column>
+    <column id="271" parent="254" name="correct_option">
+      <DataType>varchar(255)|0s</DataType>
+      <Position>4</Position>
+      <StateNumber>4090</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="272" parent="254" name="type">
+      <DataType>enum_questions_type|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StateNumber>4090</StateNumber>
+      <TypeId>17982</TypeId>
+    </column>
+    <column id="273" parent="254" name="phase">
+      <DataType>enum_questions_phase|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+      <StateNumber>4090</StateNumber>
+      <TypeId>17988</TypeId>
+    </column>
+    <column id="274" parent="254" name="deadline_min">
+      <DataType>integer|0s</DataType>
+      <DefaultExpression>30</DefaultExpression>
+      <Position>7</Position>
+      <StateNumber>4090</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <index id="275" parent="254" name="questions_pkey">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>18835</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>4090</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <key id="276" parent="254" name="questions_pkey">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>18836</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>4090</StateNumber>
+      <UnderlyingIndexId>18835</UnderlyingIndexId>
+    </key>
+    <column id="277" parent="255" name="id">
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>4065</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="278" parent="255" name="title">
+      <DataType>varchar(255)|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StateNumber>4065</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <index id="279" parent="255" name="roles_pkey">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>18799</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>4065</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <index id="280" parent="255" name="roles_title_key">
+      <ColNames>title</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>18801</ObjectId>
+      <StateNumber>4065</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+      <CollationNames>default</CollationNames>
+      <CollationIds>100</CollationIds>
+      <CollationParentNames>pg_catalog</CollationParentNames>
+    </index>
+    <key id="281" parent="255" name="roles_pkey">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>18800</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>4065</StateNumber>
+      <UnderlyingIndexId>18799</UnderlyingIndexId>
+    </key>
+    <key id="282" parent="255" name="roles_title_key">
+      <ColNames>title</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>18802</ObjectId>
+      <StateNumber>4065</StateNumber>
+      <UnderlyingIndexId>18801</UnderlyingIndexId>
+    </key>
+    <column id="283" parent="256" name="id">
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>4080</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="284" parent="256" name="code">
+      <DataType>varchar(255)|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StateNumber>4080</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="285" parent="256" name="activated">
+      <DataType>boolean|0s</DataType>
+      <DefaultExpression>false</DefaultExpression>
+      <Position>3</Position>
+      <StateNumber>4080</StateNumber>
+      <TypeId>16</TypeId>
+    </column>
+    <column id="286" parent="256" name="start_date">
+      <DataType>timestamp with time zone|0s</DataType>
+      <Position>4</Position>
+      <StateNumber>4080</StateNumber>
+      <TypeId>1184</TypeId>
+    </column>
+    <column id="287" parent="256" name="end_date">
+      <DataType>timestamp with time zone|0s</DataType>
+      <Position>5</Position>
+      <StateNumber>4080</StateNumber>
+      <TypeId>1184</TypeId>
+    </column>
+    <column id="288" parent="256" name="status">
+      <DataType>enum_sessions_status|0s</DataType>
+      <DefaultExpression>&apos;Inactive&apos;::enum_sessions_status</DefaultExpression>
+      <Position>6</Position>
+      <StateNumber>4080</StateNumber>
+      <TypeId>17963</TypeId>
+    </column>
+    <foreign-key id="289" parent="256" name="sessions_code_fkey">
+      <ColNames>code</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>18820</ObjectId>
+      <RefColNames>code</RefColNames>
+      <RefColPositions>1</RefColPositions>
+      <StateNumber>4080</StateNumber>
+      <RefTableId>18803</RefTableId>
+      <RefTableName>users</RefTableName>
+      <RefTableKind>table</RefTableKind>
+    </foreign-key>
+    <index id="290" parent="256" name="sessions_pkey">
+      <ColNames>id
+code</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>18818</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>4080</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+      <CollationIds>
+100</CollationIds>
+      <CollationParentNames>
+pg_catalog</CollationParentNames>
+      <CollationNames>
+default</CollationNames>
+    </index>
+    <key id="291" parent="256" name="sessions_pkey">
+      <ColNames>id
+code</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>18819</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>4080</StateNumber>
+      <UnderlyingIndexId>18818</UnderlyingIndexId>
+    </key>
+    <column id="292" parent="257" name="code">
+      <DataType>varchar(255)|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>4070</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="293" parent="257" name="RoleId">
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StateNumber>4070</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <foreign-key id="294" parent="257" name="users_RoleId_fkey">
+      <ColNames>RoleId</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>18808</ObjectId>
+      <RefColNames>id</RefColNames>
+      <RefColPositions>1</RefColPositions>
+      <RefKeyName>roles_pkey</RefKeyName>
+      <StateNumber>4070</StateNumber>
+      <RefTableId>18796</RefTableId>
+      <RefTableName>roles</RefTableName>
+      <RefTableKind>table</RefTableKind>
+    </foreign-key>
+    <index id="295" parent="257" name="users_pkey">
+      <ColNames>code</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>18806</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>4070</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+      <CollationNames>default</CollationNames>
+      <CollationIds>100</CollationIds>
+      <CollationParentNames>pg_catalog</CollationParentNames>
+    </index>
+    <key id="296" parent="257" name="users_pkey">
+      <ColNames>code</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>18807</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>4070</StateNumber>
+      <UnderlyingIndexId>18806</UnderlyingIndexId>
+    </key>
   </database-model>
 </dataSource>

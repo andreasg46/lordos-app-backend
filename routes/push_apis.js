@@ -110,7 +110,7 @@ router.post('/sms-push', async (req, res) => {
         "bypass_optout": false,
         "sender_id": "Lordos App",
         "scheduled_for": datetime,
-        "timezone": "Europe/Nicosia"
+        "timezone": "Etc/GMT0"
     });
 
     let config = {
@@ -128,7 +128,7 @@ router.post('/sms-push', async (req, res) => {
             console.log(JSON.stringify(response.data));
             return res.status(200)
                 .setHeader('content-type', 'application/json')
-                .send(response);
+                .send(JSON.stringify(response.data));
         })
         .catch(error => {
             return res.status(500)
