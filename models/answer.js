@@ -10,7 +10,7 @@ const Answer = db.define('Answer', {
         autoIncrement: true
     },
     selected: {
-        type: DataTypes.STRING,
+        type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: true
     },
     UserCode: {

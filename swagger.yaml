@@ -383,8 +383,8 @@ paths:
               type: object
               properties:
                 selected:
-                  type: string
-                  example: Mark Zuckerberg
+                  type: array
+                  example: [Mark Zuckerberg]
                 UserCode:
                   type: string
                   example: 101
@@ -422,24 +422,20 @@ paths:
             schema:
               type: object
               properties:
-                device_type:
+                phone:
                   type: number
-                  example: 14
-                identifier:
+                  example: +35799xxxxxx
+                code:
                   type: string
-                  example: +35799123456
+                  example: 101
                 session_id:
                   type: string
-                  example: 500
-                external_user_id:
-                  type: string
-                  example: 502
-
+                  example: 100
       responses:
         "200":
           description: Successful operation
         "400":
-          description: Bad Request | Missing parameters - device_type
+          description: Bad Request | Missing parameters - phone
         "500":
           description: Server Error
   /web-push:
@@ -496,26 +492,25 @@ paths:
             schema:
               type: object
               properties:
-                code:
+                phone:
                   type: string
-                  example: 101
-                subtitle:
+                  example: +35799131666
+                message:
                   type: string
-                  example: Default Subtitle
+                  example: Questions are now available
                 datetime:
                   type: string
-                  example: Default Date
+                  example: 2022-08-18 11:00:00
                 click_url:
                   type: string
-                  example: http://localhost:5000/#/questions?phase=A
+                  example: https://lordos.netlify.app/#/questions?phase=A
       responses:
         "200":
           description: Successful operation
         "400":
-          description: Bad Request | Missing parameters - code,datetime,topic,click_url
+          description: Bad Request | Missing parameters - phone,message,datetime,click_url
         "500":
           description: Server Error
-
 components:
   schemas:
     User:
@@ -678,5 +673,5 @@ components:
         campaign: Default Campaign
         datetime: Default Datetime
         topic: Default Topic
-        click_url: https://localhost:5000/#/questions?phase=A
+        click_url: https://lordos.netlify.app/#/questions?phase=A
 

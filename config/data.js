@@ -18,9 +18,6 @@ async function populateData() {
     await User.sync();
     const countUser = await User.count() || 0;
     if (countUser === 0) {
-        // Admin
-        await User.create({code: 9000, RoleId: '0'});
-
         // Testing Users
         await User.create({code: 101, RoleId: '1'});
         await User.create({code: 102, RoleId: '2'});
@@ -28,21 +25,28 @@ async function populateData() {
         await User.create({code: 501, RoleId: '1'});
         await User.create({code: 502, RoleId: '2'});
         await User.create({code: 503, RoleId: '3'});
+
+        // Admin
+        await User.create({code: 9001, RoleId: '0'});
+        await User.create({code: 9002, RoleId: '0'});
+        await User.create({code: 9003, RoleId: '0'});
     }
 
     await Session.sync();
     const countSession = await Session.count() || 0;
     if (countSession === 0) {
-        //Admin Session
-        await Session.create({id: 9000, code: "9000", activated: true, start_date: "2022-01-01T12:00", end_date: "2100-01-31T12:00", status: "Active"});
-
         //Test Sessions
-        await Session.create({id: 100, code: "101", activated: true, start_date: "2022-01-01T12:00", end_date: "2100-01-31T12:00", status: "Active"});
-        await Session.create({id: 100, code: "102", activated: true, start_date: "2022-01-01T12:00", end_date: "2100-01-31T12:00", status: "Active"});
-        await Session.create({id: 100, code: "103", activated: true, start_date: "2022-01-01T12:00", end_date: "2100-01-31T12:00", status: "Active"});
-        await Session.create({id: 500, code: "501", activated: true, start_date: "2022-01-01T12:00", end_date: "2100-01-31T12:00", status: "Active"});
-        await Session.create({id: 500, code: "502", activated: true, start_date: "2022-01-01T12:00", end_date: "2100-01-31T12:00", status: "Active"});
-        await Session.create({id: 500, code: "503", activated: true, start_date: "2022-01-01T12:00", end_date: "2100-01-31T12:00", status: "Active"});
+        await Session.create({id: 100, code: "101", activated: false, start_date: "2022-01-01T12:00", end_date: "2100-01-31T12:00", status: "Inactive"});
+        await Session.create({id: 100, code: "102", activated: false, start_date: "2022-01-01T12:00", end_date: "2100-01-31T12:00", status: "Inactive"});
+        await Session.create({id: 100, code: "103", activated: false, start_date: "2022-01-01T12:00", end_date: "2100-01-31T12:00", status: "Inactive"});
+        await Session.create({id: 500, code: "501", activated: false, start_date: "2022-01-01T12:00", end_date: "2100-01-31T12:00", status: "Inactive"});
+        await Session.create({id: 500, code: "502", activated: false, start_date: "2022-01-01T12:00", end_date: "2100-01-31T12:00", status: "Inactive"});
+        await Session.create({id: 500, code: "503", activated: false, start_date: "2022-01-01T12:00", end_date: "2100-01-31T12:00", status: "Inactive"});
+
+        //Admin Session
+        await Session.create({id: 9000, code: "9001", activated: true, start_date: "2022-01-01T12:00", end_date: "2100-01-31T12:00", status: "Active"});
+        await Session.create({id: 9000, code: "9002", activated: true, start_date: "2022-01-01T12:00", end_date: "2100-01-31T12:00", status: "Active"});
+        await Session.create({id: 9000, code: "9003", activated: true, start_date: "2022-01-01T12:00", end_date: "2100-01-31T12:00", status: "Active"});
     }
 
     await Question.sync();
