@@ -36,7 +36,7 @@ router.post('/device', async (req, res) => {
             'Authorization': 'Bearer ' + process.env.SMSTO_API_KEY,
             'Content-Type': 'application/json'
         },
-        data : data
+        data: data
     };
 
     axios(config)
@@ -101,16 +101,14 @@ router.post('/sms-push', async (req, res) => {
     if (!phone || !message || !click_url) {
         return res.status(400)
             .setHeader('content-type', 'application/json')
-            .send({error: `Missing parameters - code,message,datetime, click_url`});
+            .send({error: `Missing parameters - code,message,datetime,click_url`});
     }
 
     let data = JSON.stringify({
-        "message": message +  '\n' + click_url,
+        "message": message + '\n' + click_url,
         "to": phone,
-        "bypass_optout": false,
         "sender_id": "Lordos App",
-        "scheduled_for": datetime,
-        "timezone": "Etc/GMT0"
+        "scheduled_for": datetime || null
     });
 
     let config = {
@@ -124,16 +122,16 @@ router.post('/sms-push', async (req, res) => {
     };
 
     axios(config)
-        .then(function (response) {
-            console.log(JSON.stringify(response.data));
+        .then((response) => {
+            console.log(res)
             return res.status(200)
                 .setHeader('content-type', 'application/json')
-                .send(JSON.stringify(response.data));
+                .send(response.data);
         })
         .catch(error => {
             return res.status(500)
                 .setHeader('content-type', 'application/json')
-                .send({error: `Server error: ${error}`});
+                .send({error: `Server error: ${error.response.data.message}`});
         })
 
 });

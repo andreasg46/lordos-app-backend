@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const {QueryTypes} = require("sequelize");
+const db = require('../config/db');
 
 const Question = require('../models/question');
 
@@ -38,7 +40,7 @@ router.get('/questions/:type/:phase', (req, res) => {
         ]
     })
         .then(questions => {
-            if(questions) {
+            if (questions) {
                 Question.count({
                     where: {
                         type: type,
@@ -69,6 +71,37 @@ router.get('/questions/:type/:phase', (req, res) => {
         });
 });
 
+router.get('/questions/answered/:id/:code/:phase', async (req, res) => {
+    const {id, code, phase} = req.params;
+
+    {
+        await db.query(`
+                    SELECT DISTINCT u.code
+                    FROM sessions s
+                             INNER JOIN users u on u.code = s.code
+                             INNER JOIN answers a on u.code = a."UserCode"
+                             INNER JOIN questions q on a."QuestionId" = q.id
+                    where u.code != :code
+                      AND s.id = :id
+                      AND q.phase = :phase
+            `,
+            {
+                replacements: {code: code, id: id, phase: phase},
+                type: QueryTypes.SELECT
+            })
+            .then(users => {
+                return res.status(200)
+                    .setHeader('content-type', 'application/json')
+                    .send(users);
+            })
+            .catch(error => {
+                return res.status(500)
+                    .setHeader('content-type', 'application/json')
+                    .send({error: `Server error: ${error.name}`});
+            });
+    }
+})
+
 router.post('/question/create', async (req, res) => {
     const {title, options, correct_option, type, phase, deadline_min} = req.body;
 
@@ -82,8 +115,8 @@ router.post('/question/create', async (req, res) => {
         title: title,
         options: options,
         correct_option: correct_option,
-        type:type,
-        phase:phase,
+        type: type,
+        phase: phase,
         deadline_min: deadline_min
     })
         .then(question => {

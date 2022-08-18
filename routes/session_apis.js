@@ -41,6 +41,36 @@ router.get('/session/:id', (req, res) => {
         });
 });
 
+router.get('/session/users/:id/:code/', (req, res) => {
+    const {id, code} = req.params;
+
+    Session.findAll({
+        where: {
+            id: id,
+            code:
+                {
+                    [Op.ne]: code
+                }
+        }
+    })
+        .then(users => {
+            if (users) {
+                return res.status(200)
+                    .setHeader('content-type', 'application/json')
+                    .send(users);
+            } else {
+                return res.status(404)
+                    .setHeader('content-type', 'application/json')
+                    .send({error: `Sessions not found for session id and code: ${id} ${code}!`});
+            }
+        })
+        .catch(error => {
+            return res.status(500)
+                .setHeader('content-type', 'application/json')
+                .send({error: `Server error: ${error.name}`});
+        });
+});
+
 router.get('/session/user/:code', (req, res) => {
     const {code} = req.params;
 

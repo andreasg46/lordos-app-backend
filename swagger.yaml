@@ -161,6 +161,28 @@ paths:
           description: Not Found
         "500":
           description: Server Error
+  /session/users/{id}/{code}:
+    get:
+      tags:
+        - Session
+      summary: Returns user from session.
+      operationId: getUsersBySession
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the session to return the users.
+        - name: code
+          in: path
+          required: true
+          description: The code of the user to eliminate from the response.
+      responses:
+        "200":
+          description: Successful operation
+        "404":
+          description: Not Found
+        "500":
+          description: Server Error
   /session/count/{id}:
     get:
       tags:
@@ -309,6 +331,32 @@ paths:
           in: path
           required: true
           description: The type of the question to return.
+        - name: phase
+          in: path
+          required: true
+          description: The phase of the question to return.
+      responses:
+        "200":
+          description: Successful operation
+        "404":
+          description: Not Found
+        "500":
+          description: Server Error
+  /questions/answered/{id}/{code}/{phase}:
+    get:
+      tags:
+        - Question
+      summary: Returns users that answered questions by session id and question phase.
+      operationId: getAnsweredQuestionsBySessionIdAndPhase
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The session id of users to return.
+        - name: code
+          in: path
+          required: true
+          description: The code of current user to return.
         - name: phase
           in: path
           required: true
