@@ -342,7 +342,7 @@ paths:
           description: Not Found
         "500":
           description: Server Error
-  /questions/answered/{id}/{code}/{phase}:
+  /questions/answered/{id}/{code}/{phase}/{startDate}/{endDate}:
     get:
       tags:
         - Question
@@ -361,9 +361,19 @@ paths:
           in: path
           required: true
           description: The phase of the question to return.
+        - name: startDate
+          in: path
+          required: true
+          description: The day of createdAt answers to return.
+        - name: endDate
+          in: path
+          required: true
+          description: The end of day of createdAt answers to return.
       responses:
         "200":
           description: Successful operation
+        "400":
+          description: Bad Request | Missing parameters - id,code,phase,startDate,endDate
         "404":
           description: Not Found
         "500":

@@ -71,8 +71,15 @@ router.get('/questions/:type/:phase', (req, res) => {
         });
 });
 
-router.get('/questions/answered/:id/:code/:phase', async (req, res) => {
-    const {id, code, phase} = req.params;
+router.get('/questions/answered/:id/:code/:phase/:startDate/:endDate', async (req, res) => {
+    const {id, code, phase, startDate, endDate} = req.params;
+
+    if (!id || !code || !phase || !startDate || !endDate) {
+        return res.status(400)
+            .setHeader('content-type', 'application/json')
+            .send({error: `Missing parameters - id,code,phase,startDate,endDate`});
+    }
+
 
     {
         await db.query(`
@@ -84,9 +91,10 @@ router.get('/questions/answered/:id/:code/:phase', async (req, res) => {
                     where u.code != :code
                       AND s.id = :id
                       AND q.phase = :phase
+                      AND a."createdAt" BETWEEN :startDate AND :endDate
             `,
             {
-                replacements: {code: code, id: id, phase: phase},
+                replacements: {code: code, id: id, phase: phase, startDate, endDate},
                 type: QueryTypes.SELECT
             })
             .then(users => {
