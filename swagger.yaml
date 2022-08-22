@@ -529,7 +529,7 @@ paths:
                   example: Default Topic
                 click_url:
                   type: string
-                  example: http://localhost:5000/#/questions?phase=A
+                  example: http://localhost:5000/
       responses:
         "200":
           description: Successful operation
@@ -561,7 +561,7 @@ paths:
                   example: 2022-08-18 11:00:00
                 click_url:
                   type: string
-                  example: https://lordos.netlify.app/#/questions?phase=A
+                  example: https://lordos.netlify.app/
       responses:
         "200":
           description: Successful operation
