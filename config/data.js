@@ -2,6 +2,7 @@ const Role = require('../models/role');
 const Session = require('../models/session');
 const User = require('../models/user');
 const Question = require('../models/question');
+const Settings = require('../models/settings');
 
 const db = require('./db');
 
@@ -81,6 +82,14 @@ async function populateData() {
         await Question.create({title: "Child: What technology is used to record cryptocurrency transactions?", options: ["Digital wallet", "Mining", "Blockchain", "Token"], "correct_option": "Mining", type: 'child',phase: 'C'});
         await Question.create({title: "Child: Why is Big Data important?", options: ["Because it is structured", "Because it may be analyzed to reveal patterns and trends", "Because of its complexity", "Because of its size"], "correct_option": "Because it may be analyzed to reveal patterns and trends", type: 'child', phase: 'C'});
         await Question.create({title: "Child: What technology is used to make telephone calls over the Internet possible?", options: ["Bluetooth", "Ethernet", "NFC", "VoIP"], "correct_option": "VoIP", type: 'child', phase: 'C'});
+
+    }
+
+    await Settings.sync();
+    const countSettings = await Settings.count() || 0;
+    if (countSettings === 0) {
+        await Settings.create({phaseA_time: "09:00:00", phaseA_deadline: "09:30:00", phaseB_time: "14:00:00",phaseB_deadline: "14:30:00" , phaseC_time: "18:00:00", phaseC_deadline: "18:30:00", deadline: "30"});
+
     }
 
     // Sync DB

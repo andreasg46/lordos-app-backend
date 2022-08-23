@@ -20,6 +20,8 @@ tags:
     description: Everything about answers
   - name: Push Notifications
     description: Everything about push Notifications
+  - name: Settings
+    description: Everything about settings
 paths:
   /users:
     get:
@@ -567,6 +569,17 @@ paths:
           description: Successful operation
         "400":
           description: Bad Request | Missing parameters - phone,message,datetime,click_url
+        "500":
+          description: Server Error
+  /settings:
+    get:
+      tags:
+        - Settings
+      summary: Returns all settings.
+      operationId: getSettings
+      responses:
+        "200":
+          description: Successful operation
         "500":
           description: Server Error
 components:

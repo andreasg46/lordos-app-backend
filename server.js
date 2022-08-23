@@ -47,6 +47,7 @@ const session_apis = require('./routes/session_apis');
 const question_apis = require('./routes/question_apis');
 const answer_apis = require('./routes/answer_apis');
 const push_apis = require('./routes/push_apis');
+const settings_apis = require('./routes/settings_apis');
 
 // Endpoints
 app.use(PATH, user_apis)
@@ -54,6 +55,7 @@ app.use(PATH, session_apis)
 app.use(PATH, question_apis)
 app.use(PATH, answer_apis)
 app.use(PATH, push_apis)
+app.use(PATH, settings_apis)
 
 app.listen(PORT, () => {
     console.log(`App listening at http://localhost:${PORT}${PATH}`)
