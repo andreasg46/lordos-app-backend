@@ -74,7 +74,8 @@ router.post('/web-push', async (req, res) => {
         web_push_topic: topic,
         url: click_url,
         send_after: datetime,
-        include_external_user_ids: [code]
+        include_external_user_ids: [code],
+        ttl: 1800
         // filters: [
         //     {"field": "tag", "key": "session_id", "relation": "=", "value": session_id},
         // ],

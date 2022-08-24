@@ -380,6 +380,42 @@ paths:
           description: Not Found
         "500":
           description: Server Error
+  /questions/user/answered/{id}/{code}/{phase}/{startDate}/{endDate}:
+    get:
+      tags:
+        - Question
+      summary: Returns user that answered questions by session id and question phase.
+      operationId: getAnsweredQuestionsByUserSessionIdAndPhase
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The session id of users to return.
+        - name: code
+          in: path
+          required: true
+          description: The code of current user to return.
+        - name: phase
+          in: path
+          required: true
+          description: The phase of the question to return.
+        - name: startDate
+          in: path
+          required: true
+          description: The day of createdAt answers to return.
+        - name: endDate
+          in: path
+          required: true
+          description: The end of day of createdAt answers to return.
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: Bad Request | Missing parameters - id,code,phase,startDate,endDate
+        "404":
+          description: Not Found
+        "500":
+          description: Server Error
   /question/create:
     post:
       tags:

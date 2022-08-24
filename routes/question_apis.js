@@ -110,6 +110,45 @@ router.get('/questions/answered/:id/:code/:phase/:startDate/:endDate', async (re
     }
 })
 
+router.get('/questions/user/answered/:id/:code/:phase/:startDate/:endDate', async (req, res) => {
+    const {id, code, phase, startDate, endDate} = req.params;
+
+    if (!id || !code || !phase || !startDate || !endDate) {
+        return res.status(400)
+            .setHeader('content-type', 'application/json')
+            .send({error: `Missing parameters - id,code,phase,startDate,endDate`});
+    }
+
+
+    {
+        await db.query(`
+                    SELECT DISTINCT u.code
+                    FROM sessions s
+                             INNER JOIN users u on u.code = s.code
+                             INNER JOIN answers a on u.code = a."UserCode"
+                             INNER JOIN questions q on a."QuestionId" = q.id
+                    where u.code = :code
+                      AND s.id = :id
+                      AND q.phase = :phase
+                      AND a."createdAt" BETWEEN :startDate AND :endDate
+            `,
+            {
+                replacements: {code: code, id: id, phase: phase, startDate, endDate},
+                type: QueryTypes.SELECT
+            })
+            .then(users => {
+                return res.status(200)
+                    .setHeader('content-type', 'application/json')
+                    .send(users);
+            })
+            .catch(error => {
+                return res.status(500)
+                    .setHeader('content-type', 'application/json')
+                    .send({error: `Server error: ${error.name}`});
+            });
+    }
+})
+
 router.post('/question/create', async (req, res) => {
     const {title, options, correct_option, type, phase, deadline_min} = req.body;
 
