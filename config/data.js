@@ -23,9 +23,6 @@ async function populateData() {
         await User.create({code: 101, RoleId: '1'});
         await User.create({code: 102, RoleId: '2'});
         await User.create({code: 103, RoleId: '3'});
-        await User.create({code: 501, RoleId: '1'});
-        await User.create({code: 502, RoleId: '2'});
-        await User.create({code: 503, RoleId: '3'});
 
         // Admin
         await User.create({code: 9001, RoleId: '0'});
