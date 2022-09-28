@@ -124,7 +124,6 @@ router.post('/sms-push', async (req, res) => {
 
     axios(config)
         .then((response) => {
-            console.log(res)
             return res.status(200)
                 .setHeader('content-type', 'application/json')
                 .send(response.data);

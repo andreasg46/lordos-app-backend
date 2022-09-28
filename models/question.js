@@ -21,6 +21,11 @@ const Question = db.define('Question', {
         type: DataTypes.ENUM('parent', 'child'),
         allowNull: false
     },
+    response: {
+        type: DataTypes.ENUM('single', 'multiple'),
+        allowNull: false,
+        defaultValue: 'multiple'
+    },
     phase: {
         type: DataTypes.ENUM('A', 'B', 'C'),
         allowNull: false

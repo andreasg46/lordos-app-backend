@@ -25,8 +25,6 @@ router.post('/answer/create', async (req, res) => {
     const TODAY_START = new Date().setHours(0, 0, 0, 0);
     const NOW = new Date().setHours(23, 59, 59);
 
-    console.log(TODAY_START);
-    console.log(NOW);
     if (!selected || !UserCode || !QuestionId) {
         return res.status(400)
             .setHeader('content-type', 'application/json')
