@@ -122,24 +122,41 @@ router.get('/questions/user/answered/:id/:code/:phase/:startDate/:endDate', asyn
 
     {
         await db.query(`
-                    SELECT DISTINCT u.code
+                    SELECT COUNT (u.code)
                     FROM sessions s
-                             INNER JOIN users u on u.code = s.code
-                             INNER JOIN answers a on u.code = a."UserCode"
-                             INNER JOIN questions q on a."QuestionId" = q.id
-                    where u.code = :code
+                     INNER JOIN users u on u.code = s.code
+                     INNER JOIN answers a on u.code = a."UserCode"
+                     INNER JOIN questions q on a."QuestionId" = q.id
+                    WHERE u.code = :code
                       AND s.id = :id
                       AND q.phase = :phase
-                      AND a."createdAt" BETWEEN :startDate AND :endDate
+                     /* AND a."createdAt" BETWEEN :startDate AND :endDate*/
             `,
             {
                 replacements: {code: code, id: id, phase: phase, startDate, endDate},
                 type: QueryTypes.SELECT
             })
-            .then(users => {
-                return res.status(200)
-                    .setHeader('content-type', 'application/json')
-                    .send(users);
+            .then(count => {
+                db.query(`
+                    SELECT COUNT (q.id)
+                    FROM questions q
+                    WHERE q.phase = :phase
+            `,
+                    {
+                        replacements: {phase: phase},
+                        type: QueryTypes.SELECT
+                    })
+                    .then(q_count => {
+                        if(parseInt(count[0].count) === parseInt(q_count[0].count)) {
+                            return res.status(200)
+                                .setHeader('content-type', 'application/json')
+                                .send(true);
+                        } else {
+                            return res.status(200)
+                                .setHeader('content-type', 'application/json')
+                                .send(false);
+                        }
+                    })
             })
             .catch(error => {
                 return res.status(500)
