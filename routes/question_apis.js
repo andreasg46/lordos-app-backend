@@ -110,8 +110,8 @@ router.get('/questions/answered/:id/:code/:phase/:startDate/:endDate', async (re
     }
 })
 
-router.get('/questions/user/answered/:id/:code/:phase/:startDate/:endDate', async (req, res) => {
-    const {id, code, phase, startDate, endDate} = req.params;
+router.get('/questions/user/answered/:id/:code/:phase/:startDate/:endDate/:type', async (req, res) => {
+    const {id, code, phase, startDate, endDate, type} = req.params;
 
     if (!id || !code || !phase || !startDate || !endDate) {
         return res.status(400)
@@ -124,13 +124,13 @@ router.get('/questions/user/answered/:id/:code/:phase/:startDate/:endDate', asyn
         await db.query(`
                     SELECT COUNT (u.code)
                     FROM sessions s
-                     INNER JOIN users u on u.code = s.code
-                     INNER JOIN answers a on u.code = a."UserCode"
-                     INNER JOIN questions q on a."QuestionId" = q.id
+                             INNER JOIN users u on u.code = s.code
+                             INNER JOIN answers a on u.code = a."UserCode"
+                             INNER JOIN questions q on a."QuestionId" = q.id
                     WHERE u.code = :code
                       AND s.id = :id
                       AND q.phase = :phase
-                     /* AND a."createdAt" BETWEEN :startDate AND :endDate*/
+                    /* AND a."createdAt" BETWEEN :startDate AND :endDate*/
             `,
             {
                 replacements: {code: code, id: id, phase: phase, startDate, endDate},
@@ -138,24 +138,19 @@ router.get('/questions/user/answered/:id/:code/:phase/:startDate/:endDate', asyn
             })
             .then(count => {
                 db.query(`
-                    SELECT COUNT (q.id)
-                    FROM questions q
-                    WHERE q.phase = :phase
-            `,
+                            SELECT COUNT (q.id)
+                            FROM questions q
+                            WHERE q.phase = :phase AND q.type = :type
+                    `,
                     {
-                        replacements: {phase: phase},
+                        replacements: {phase: phase, type:type},
                         type: QueryTypes.SELECT
                     })
                     .then(q_count => {
-                        if(parseInt(count[0].count) === parseInt(q_count[0].count)) {
-                            return res.status(200)
-                                .setHeader('content-type', 'application/json')
-                                .send(true);
-                        } else {
-                            return res.status(200)
-                                .setHeader('content-type', 'application/json')
-                                .send(false);
-                        }
+                        let body = {count, q_count}
+                        return res.status(200)
+                            .setHeader('content-type', 'application/json')
+                            .send(body);
                     })
             })
             .catch(error => {

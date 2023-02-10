@@ -380,7 +380,7 @@ paths:
           description: Not Found
         "500":
           description: Server Error
-  /questions/user/answered/{id}/{code}/{phase}/{startDate}/{endDate}:
+  /questions/user/answered/{id}/{code}/{phase}/{startDate}/{endDate}/{type}:
     get:
       tags:
         - Question
@@ -407,6 +407,10 @@ paths:
           in: path
           required: true
           description: The end of day of createdAt answers to return.
+        - name: type
+          in: path
+          required: true
+          description: The type of user.
       responses:
         "200":
           description: Successful operation
